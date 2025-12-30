@@ -14,12 +14,10 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    // Yeni üye kaydetme
     public Member saveMember(Member member) {
         return memberRepository.save(member);
     }
 
-    // Tüm üyeleri listeleme
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }

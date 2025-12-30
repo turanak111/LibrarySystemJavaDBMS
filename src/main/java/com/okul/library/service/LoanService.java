@@ -25,7 +25,7 @@ public class LoanService {
         this.memberRepository = memberRepository;
     }
 
-    @Transactional // İşlem sırasında hata olursa veritabanını geri alır (Rollback)
+    @Transactional //Rollback
     public String borrowBook(Long bookId, Long memberId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Kitap bulunamadı!"));
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Üye bulunamadı!"));
@@ -41,7 +41,6 @@ public class LoanService {
         loan.setLoanDate(LocalDate.now());
         loan.setReturned(false);
 
-        // Kitabın durumunu güncelle (Artık müsait değil)
         book.setAvailable(false);
         bookRepository.save(book);
 
@@ -66,7 +65,8 @@ public class LoanService {
         bookRepository.save(book);
         loanRepository.save(loan);
 
-        // --- CEZA HESAPLAMA ---
+        // CEZA HESAPLAMA 
+
         // Kural: 15 gün içinde getirmeli.
         LocalDate dueDate = loan.getLoanDate().plusDays(15);
 

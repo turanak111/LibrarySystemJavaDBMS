@@ -15,23 +15,23 @@ public class LibraryController {
 
     private final BookService bookService;
     private final LoanService loanService;
-    private final MemberService memberService; // Yeni ekledik
+    private final MemberService memberService;
 
-    // Constructor'a MemberService'i de ekledik
+    // Constructor
     public LibraryController(BookService bookService, LoanService loanService, MemberService memberService) {
         this.bookService = bookService;
         this.loanService = loanService;
         this.memberService = memberService;
     }
 
-    // --- KİTAP İŞLEMLERİ ---
+    // KİTAP İŞLEMLERİ
 
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @PostMapping("/books") // YENİ: Kitap Ekleme
+    @PostMapping("/books")
     public Book createBook(@RequestBody Book book) {
         return bookService.saveBook(book);
     }
@@ -41,19 +41,19 @@ public class LibraryController {
         return bookService.searchBooks(query);
     }
 
-    // --- ÜYE İŞLEMLERİ (YENİ) ---
+    // ÜYE İŞLEMLERİ
 
     @GetMapping("/members")
     public List<Member> getAllMembers() {
         return memberService.getAllMembers();
     }
 
-    @PostMapping("/members") // YENİ: Üye Ekleme
+    @PostMapping("/members")
     public Member createMember(@RequestBody Member member) {
         return memberService.saveMember(member);
     }
 
-    // --- ÖDÜNÇ / İADE İŞLEMLERİ ---
+    // ÖDÜNÇ/İADE İŞLEMLERİ
 
     @PostMapping("/borrow")
     public String borrowBook(@RequestParam Long bookId, @RequestParam Long memberId) {

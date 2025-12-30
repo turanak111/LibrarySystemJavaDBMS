@@ -15,7 +15,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final LoanRepository loanRepository;
 
-    // Constructor Injection (En sağlıklı yöntem)
+    // Constructor Injection
     public BookService(BookRepository bookRepository, LoanRepository loanRepository) {
         this.bookRepository = bookRepository;
         this.loanRepository = loanRepository;
@@ -30,16 +30,17 @@ public class BookService {
     }
 
     public List<Book> searchBooks(String keyword) {
-        // Hem isme hem yazara göre arama yapalım
+        // Hem isme hem yazara göre arama yap
         List<Book> byTitle = bookRepository.findByTitleContainingIgnoreCase(keyword);
         List<Book> byAuthor = bookRepository.findByAuthorContainingIgnoreCase(keyword);
         byTitle.addAll(byAuthor); // İki listeyi birleştir
         return byTitle;
     }
 
-    // --- ÖNERİ ALGORİTMASI ---
+    // ÖNERİ ALGORİTMASI
+    
     public List<Book> recommendBooks(Long memberId) {
-        // 1. Üyenin geçmiş ödünç işlemlerini bul
+        // Üyenin geçmiş ödünç işlemlerini bul
         List<Loan> memberLoans = loanRepository.findByMemberId(memberId);
 
         if (memberLoans.isEmpty()) {
@@ -47,11 +48,11 @@ public class BookService {
             return bookRepository.findAll().stream().limit(3).toList();
         }
 
-        // 2. En son okuduğu kitabı bul
+        // En son okuduğu kitabı bul
         Loan lastLoan = memberLoans.get(memberLoans.size() - 1);
         String favGenre = lastLoan.getBook().getGenre();
 
-        // 3. Veritabanındaki kitaplardan bu türde olanları bul (Basit filtreleme)
+        // Veritabanındaki kitaplardan bu türde olanları bul (Basit filtreleme)
         List<Book> allBooks = bookRepository.findAll();
         return allBooks.stream()
                 .filter(book -> book.getGenre().equalsIgnoreCase(favGenre)) // Aynı tür

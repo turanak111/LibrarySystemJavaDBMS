@@ -19,7 +19,7 @@ public class Book {
     @Column(name = "is_available")
     private boolean isAvailable;
 
-    // Bir kitabın bir şubesi olur (Many to One)
+    // Bir kitabın bir şubesi olur
     @ManyToOne
     @JoinColumn(name = "branch_id")
     private Branch branch;
