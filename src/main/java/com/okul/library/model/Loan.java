@@ -20,10 +20,12 @@ public class Loan {
     // Hangi üye?
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("loans")
     private Member member;
 
     @Column(name = "loan_date")
     private LocalDate loanDate;
+    private boolean fineWaived;
 
     @Column(name = "return_date")
     private LocalDate returnDate;

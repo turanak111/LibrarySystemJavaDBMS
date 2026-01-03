@@ -53,13 +53,13 @@ public class LibraryController {
         return memberService.saveMember(member);
     }
 
-    // ÖDÜNÇ/İADE İŞLEMLERİ
+// --- ÖDÜNÇ / İADE İŞLEMLERİ ---
 
+    // GÜNCELLENDİ: Artık JSON Body alıyor
     @PostMapping("/borrow")
-    public String borrowBook(@RequestParam Long bookId, @RequestParam Long memberId) {
-        return loanService.borrowBook(bookId, memberId);
+    public String borrowBook(@RequestBody com.okul.library.dto.BorrowRequest request) {
+        return loanService.borrowBook(request.getBookId(), request.getMemberId());
     }
-
     @PostMapping("/return")
     public String returnBook(@RequestParam Long loanId) {
         return loanService.returnBook(loanId);
@@ -68,5 +68,33 @@ public class LibraryController {
     @GetMapping("/recommend")
     public List<Book> getRecommendations(@RequestParam Long memberId) {
         return bookService.recommendBooks(memberId);
+    }
+
+    // --- SİLME İŞLEMLERİ (YENİ) ---
+
+    @DeleteMapping("/books/{id}")
+    public String deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return "Kitap silindi.";
+    }
+
+    @DeleteMapping("/members/{id}")
+    public String deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
+        return "Üye silindi.";
+    }
+
+    // --- STOK GÜNCELLEME (YENİ) ---
+
+    @PutMapping("/books/{id}/stock")
+    public com.okul.library.model.Book updateStock(@PathVariable Long id, @RequestParam int newStock) {
+        return bookService.updateStock(id, newStock);
+    }
+
+    // --- CEZA İPTALİ (YENİ) ---
+
+    @PutMapping("/loans/{id}/waive")
+    public String waiveFine(@PathVariable Long id) {
+        return loanService.waiveFine(id);
     }
 }

@@ -36,7 +36,16 @@ public class BookService {
         byTitle.addAll(byAuthor); // İki listeyi birleştir
         return byTitle;
     }
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
 
+    // Stok güncelleme için de bir metod ekleyelim (Yönetici stok ekleyebilsin)
+    public Book updateStock(Long id, int newStock) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Kitap yok"));
+        book.setStock(newStock);
+        return bookRepository.save(book);
+    }
     // ÖNERİ ALGORİTMASI
     
     public List<Book> recommendBooks(Long memberId) {
@@ -60,4 +69,6 @@ public class BookService {
                 .limit(5) // En fazla 5 tane öner
                 .toList();
     }
+
+
 }
