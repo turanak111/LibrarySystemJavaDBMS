@@ -4,11 +4,11 @@ export default function Dashboard() {
   const [stats, setStats] = useState({
     totalBooks: 0,
     totalMembers: 0,
-    activeLoans: 0 // Bunu backend düzelince güncelleriz
+    activeLoans: 0 
   });
 
   useEffect(() => {
-    // 1. Kitap Sayısını Çek
+    
     fetch("http://localhost:8080/api/books")
       .then(res => res.json())
       .then(data => {
@@ -16,7 +16,7 @@ export default function Dashboard() {
       })
       .catch(err => console.error(err));
 
-    // 2. Üye Sayısını Çek
+    
     fetch("http://localhost:8080/api/members")
       .then(res => res.json())
       .then(data => {
@@ -32,10 +32,10 @@ export default function Dashboard() {
         <p className="text-[#929bc9]">Kütüphane durumuna genel bakış.</p>
       </div>
 
-      {/* İstatistik Kartları */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
-        {/* Kart 1: Toplam Kitap */}
+       
         <div className="bg-[#1a1d2d] p-6 rounded-xl border border-[#232948] flex items-center gap-4 hover:border-[#1132d4] transition-colors group">
           <div className="bg-[#1132d4]/10 p-3 rounded-lg group-hover:bg-[#1132d4] transition-colors">
             <span className="material-symbols-outlined text-[#1132d4] text-3xl group-hover:text-white">menu_book</span>
@@ -46,7 +46,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Kart 2: Toplam Üye */}
+       
         <div className="bg-[#1a1d2d] p-6 rounded-xl border border-[#232948] flex items-center gap-4 hover:border-[#1132d4] transition-colors group">
           <div className="bg-[#1132d4]/10 p-3 rounded-lg group-hover:bg-[#1132d4] transition-colors">
             <span className="material-symbols-outlined text-[#1132d4] text-3xl group-hover:text-white">group</span>
@@ -57,7 +57,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Kart 3: Aktif İşlemler (Temsili) */}
+        
         <div className="bg-[#1a1d2d] p-6 rounded-xl border border-[#232948] flex items-center gap-4 hover:border-orange-500 transition-colors group">
           <div className="bg-orange-500/10 p-3 rounded-lg group-hover:bg-orange-500 transition-colors">
             <span className="material-symbols-outlined text-orange-500 text-3xl group-hover:text-white">sync_alt</span>
@@ -69,7 +69,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Hızlı İşlemler Bölümü */}
       <h2 className="text-xl font-bold mb-4">Hızlı İşlemler</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-[#1a1d2d] p-6 rounded-xl border border-[#232948]">

@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 export default function Sidebar() {
   const location = useLocation();
 
-  // Aktif link stili
+  
   const activeClass = "bg-[#1132d4]/10 text-[#1132d4] border-l-4 border-[#1132d4]";
-  // Pasif link stili
+  
   const inactiveClass = "text-[#929bc9] hover:bg-[#232948] hover:text-white border-l-4 border-transparent";
 
   return (
