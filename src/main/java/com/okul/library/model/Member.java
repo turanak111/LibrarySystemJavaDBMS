@@ -20,6 +20,11 @@ public class Member {
     @Column(name = "join_date")
     private LocalDate joinDate;
 
+
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private java.util.List<Loan> loans;
 

@@ -7,6 +7,8 @@ import Books from "./pages/Books";
 import Members from "./pages/Members";
 import Loans from "./pages/Loans";
 
+import Branches from './pages/Branches';
+
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +23,7 @@ function App() {
             <Route path="/books" element={<Books />} />
             <Route path="/members" element={<Members />} />
             <Route path="/loans" element={<Loans />} />
+            <Route path="/branches" element={<Branches />} />
           </Routes>
         </main>
       </div>

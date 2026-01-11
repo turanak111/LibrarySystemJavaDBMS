@@ -6,6 +6,8 @@ import com.okul.library.service.BookService;
 import com.okul.library.service.LoanService;
 import com.okul.library.service.MemberService;
 import org.springframework.web.bind.annotation.*;
+import com.okul.library.model.Branch;
+import com.okul.library.repository.BranchRepository;
 
 import java.util.List;
 
@@ -16,14 +18,26 @@ public class LibraryController {
     private final BookService bookService;
     private final LoanService loanService;
     private final MemberService memberService;
+    private final BranchRepository branchRepository;
 
     // Constructor
-    public LibraryController(BookService bookService, LoanService loanService, MemberService memberService) {
+    public LibraryController(BookService bookService, LoanService loanService, MemberService memberService, BranchRepository branchRepository) {
         this.bookService = bookService;
         this.loanService = loanService;
         this.memberService = memberService;
+        this.branchRepository = branchRepository;
+    }
+    @GetMapping("/branches")
+    public List<Branch> getAllBranches() {
+        return branchRepository.findAll();
     }
 
+    // --- MEVCUT GET METODUNUN ALTINA EKLE ---
+
+    @PostMapping("/branches")
+    public Branch createBranch(@RequestBody Branch branch) {
+        return branchRepository.save(branch);
+    }
     // KİTAP İŞLEMLERİ
 
     @GetMapping("/books")
@@ -97,4 +111,17 @@ public class LibraryController {
     public String waiveFine(@PathVariable Long id) {
         return loanService.waiveFine(id);
     }
+    @DeleteMapping("/branches/{id}")
+    public org.springframework.http.ResponseEntity<String> deleteBranch(@PathVariable Long id) {
+        try {
+            branchRepository.deleteById(id);
+            return org.springframework.http.ResponseEntity.ok("Şube başarıyla silindi.");
+        } catch (Exception e) {
+            // Eğer şubede kitap veya üye varsa veritabanı hata fırlatır, biz de kullanıcıya bunu söyleriz.
+            return org.springframework.http.ResponseEntity.status(500)
+                    .body("Bu şube silinemez! İçinde kayıtlı kitaplar veya üyeler olabilir.");
+        }
+    }
+
+
 }

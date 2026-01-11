@@ -38,6 +38,12 @@ export default function Sidebar() {
             <span className="material-symbols-outlined text-xl">group</span>
             <p className="text-sm font-medium">Üyeler</p>
           </Link>
+          <Link to="/branches" className="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-[#1132d4]/10 p-3 rounded-xl transition-all group">
+    <span className="material-symbols-outlined group-hover:text-[#1132d4] transition-colors">
+        apartment
+    </span>
+            <span className="font-medium">Şubeler</span>
+          </Link>
 
           <Link to="/loans" className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-colors group ${location.pathname === "/loans" ? activeClass : inactiveClass}`}>
             <span className="material-symbols-outlined text-xl">sync_alt</span>
